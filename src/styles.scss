@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+
+// Bootstrap imports
+@use "bootstrap/scss/bootstrap";
+
+// FontAwesome imports  
+@use "@fortawesome/fontawesome-free/scss/fontawesome";
+@use "@fortawesome/fontawesome-free/scss/solid";
+@use "@fortawesome/fontawesome-free/scss/brands";
+
+// Global styles
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Custom brand colors from branding.json
+:root {
+  --primary-color: #FFDF00;
+  --secondary-color: #004040;
+}

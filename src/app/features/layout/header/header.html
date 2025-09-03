@@ -1,0 +1,57 @@
+<header class="sticky-top bg-white shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+      <!-- Menu Toggle Button (Left) -->
+      <button 
+        class="btn btn-outline-secondary me-3" 
+        type="button"
+        title="Toggle Navigation Menu"
+        (click)="toggleSidenav()">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Logo (Right) -->
+      <a class="navbar-brand ms-auto" routerLink="/dashboard">
+        <img 
+          [src]="brandInfo().logo.title" 
+          [alt]="brandInfo().organizationName"
+          [title]="brandInfo().organizationName"
+          height="40"
+          class="d-inline-block align-text-top">
+      </a>
+    </div>
+  </nav>
+
+  <!-- Side Navigation Overlay -->
+  @if (isSidenavOpen()) {
+    <div class="sidenav-overlay" (click)="closeSidenav()">
+      <nav class="sidenav bg-white shadow-lg">
+        <div class="sidenav-header p-3 border-bottom">
+          <h5 class="mb-0">{{ brandInfo().organizationName }}</h5>
+        </div>
+        <ul class="list-unstyled p-3">
+          <li class="mb-2">
+            <a 
+              routerLink="/dashboard" 
+              class="nav-link d-flex align-items-center"
+              [class.active]="activeMenu() === 'dashboard'"
+              (click)="setActiveMenu('dashboard')">
+              <i class="fas fa-tachometer-alt me-2"></i>
+              Dashboard
+            </a>
+          </li>
+          <li class="mb-2">
+            <a 
+              routerLink="/participants" 
+              class="nav-link d-flex align-items-center"
+              [class.active]="activeMenu() === 'participants'"
+              (click)="setActiveMenu('participants')">
+              <i class="fas fa-users me-2"></i>
+              Participants
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  }
+</header>

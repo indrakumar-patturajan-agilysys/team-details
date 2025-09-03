@@ -1,0 +1,83 @@
+// Participant list styles
+.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+  
+  &:hover {
+    background-color: #e9ecef;
+  }
+  
+  i {
+    margin-left: 0.5rem;
+    font-size: 0.8rem;
+  }
+}
+
+.table {
+  th {
+    border-top: none;
+    font-weight: 600;
+    color: var(--secondary-color);
+    
+    &.sortable {
+      position: relative;
+    }
+  }
+  
+  td {
+    vertical-align: middle;
+    
+    a {
+      color: inherit;
+      text-decoration: none;
+      
+      &:hover {
+        color: var(--primary-color);
+      }
+      
+      i {
+        font-size: 1.2rem;
+        transition: transform 0.2s ease;
+        
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+}
+
+.btn-group {
+  .btn {
+    border-radius: 0.25rem;
+    margin-right: 0.25rem;
+    
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.card {
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  
+  .card-body {
+    padding: 1.5rem;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: 0.875rem;
+  }
+  
+  .btn-group {
+    .btn {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+    }
+  }
+}

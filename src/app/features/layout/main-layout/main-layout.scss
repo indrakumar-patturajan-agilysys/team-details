@@ -1,0 +1,18 @@
+// Main layout styles
+.main-layout {
+  min-height: 100vh;
+  
+  main {
+    padding: 2rem 0;
+    background-color: #f8f9fa;
+    
+    @media (max-width: 768px) {
+      padding: 1rem 0;
+    }
+  }
+}
+
+// Ensure footer stays at bottom
+.min-vh-100 {
+  min-height: 100vh;
+}

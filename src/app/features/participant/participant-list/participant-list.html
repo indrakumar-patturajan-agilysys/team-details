@@ -1,0 +1,152 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Participants</h1>
+        <a routerLink="/participants/create" class="btn btn-primary">
+          <i class="fas fa-plus me-2"></i>
+          Add Participant
+        </a>
+      </div>
+
+      @if (loading()) {
+        <div class="text-center py-5">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      } @else {
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class="table-light">
+                  <tr>
+                    <th 
+                      scope="col" 
+                      class="sortable" 
+                      (click)="sort('name')">
+                      Name
+                      @if (sortBy() === 'name') {
+                        <i class="fas" [class.fa-sort-up]="sortDirection() === 'asc'" [class.fa-sort-down]="sortDirection() === 'desc'"></i>
+                      }
+                    </th>
+                    <th 
+                      scope="col" 
+                      class="sortable" 
+                      (click)="sort('email')">
+                      Email
+                      @if (sortBy() === 'email') {
+                        <i class="fas" [class.fa-sort-up]="sortDirection() === 'asc'" [class.fa-sort-down]="sortDirection() === 'desc'"></i>
+                      }
+                    </th>
+                    <th scope="col">WhatsApp</th>
+                    <th scope="col">LinkedIn</th>
+                    <th scope="col">GitHub</th>
+                    <th 
+                      scope="col" 
+                      class="sortable" 
+                      (click)="sort('created')">
+                      Created
+                      @if (sortBy() === 'created') {
+                        <i class="fas" [class.fa-sort-up]="sortDirection() === 'asc'" [class.fa-sort-down]="sortDirection() === 'desc'"></i>
+                      }
+                    </th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (participant of getSortedParticipants(); track participant.id) {
+                    <tr>
+                      <td>{{ participant.name }}</td>
+                      <td>
+                        <a [href]="'mailto:' + participant.email">{{ participant.email }}</a>
+                      </td>
+                      <td>
+                        @if (participant.whatsApp) {
+                          <a [href]="formatWhatsAppUrl(participant.whatsApp)" target="_blank">
+                            <i class="fab fa-whatsapp text-success"></i>
+                          </a>
+                        } @else {
+                          <span class="text-muted">-</span>
+                        }
+                      </td>
+                      <td>
+                        @if (participant.linkedIn) {
+                          <a [href]="participant.linkedIn" target="_blank">
+                            <i class="fab fa-linkedin text-primary"></i>
+                          </a>
+                        } @else {
+                          <span class="text-muted">-</span>
+                        }
+                      </td>
+                      <td>
+                        @if (participant.gitHub) {
+                          <a [href]="participant.gitHub" target="_blank">
+                            <i class="fab fa-github"></i>
+                          </a>
+                        } @else {
+                          <span class="text-muted">-</span>
+                        }
+                      </td>
+                      <td>{{ formatDate(participant.created) }}</td>
+                      <td>
+                        <div class="btn-group btn-group-sm">
+                          <a 
+                            [routerLink]="['/participants/edit', participant.id]" 
+                            class="btn btn-outline-primary btn-sm"
+                            title="Edit">
+                            <i class="fas fa-edit"></i>
+                          </a>
+                          <button 
+                            class="btn btn-outline-danger btn-sm"
+                            title="Delete"
+                            (click)="deleteParticipant(participant.id)">
+                            <i class="fas fa-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  } @empty {
+                    <tr>
+                      <td colspan="7" class="text-center py-4">
+                        <div class="text-muted">
+                          <i class="fas fa-users fa-3x mb-3"></i>
+                          <p>No participants found.</p>
+                          <a routerLink="/participants/create" class="btn btn-primary">
+                            Add First Participant
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            @if (getTotalPages() > 1) {
+              <nav aria-label="Participant pagination">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item" [class.disabled]="currentPage() === 1">
+                    <button class="page-link" (click)="changePage(currentPage() - 1)">&laquo;</button>
+                  </li>
+                  
+                  @for (page of [].constructor(getTotalPages()); track $index) {
+                    <li class="page-item" [class.active]="currentPage() === ($index + 1)">
+                      <button class="page-link" (click)="changePage($index + 1)">{{ $index + 1 }}</button>
+                    </li>
+                  }
+                  
+                  <li class="page-item" [class.disabled]="currentPage() === getTotalPages()">
+                    <button class="page-link" (click)="changePage(currentPage() + 1)">&raquo;</button>
+                  </li>
+                </ul>
+              </nav>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

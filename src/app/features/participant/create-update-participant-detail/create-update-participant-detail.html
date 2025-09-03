@@ -1,0 +1,166 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">
+            @if (isEditMode()) {
+              <i class="fas fa-edit me-2"></i>
+              Edit Participant
+            } @else {
+              <i class="fas fa-plus me-2"></i>
+              Add New Participant
+            }
+          </h3>
+        </div>
+        <div class="card-body">
+          @if (loading()) {
+            <div class="text-center py-4">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          } @else {
+            <form [formGroup]="participantForm" (ngSubmit)="onSubmit()">
+              <!-- Name Field -->
+              <div class="mb-3">
+                <label for="name" class="form-label">
+                  Name <span class="text-danger">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control"
+                  formControlName="name"
+                  [class.is-invalid]="isFieldInvalid('name')"
+                  placeholder="Enter full name">
+                @if (isFieldInvalid('name')) {
+                  <div class="invalid-feedback">
+                    {{ getFieldError('name') }}
+                  </div>
+                }
+              </div>
+
+              <!-- Email Field -->
+              <div class="mb-3">
+                <label for="email" class="form-label">
+                  Email <span class="text-danger">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control"
+                  formControlName="email"
+                  [class.is-invalid]="isFieldInvalid('email')"
+                  placeholder="Enter email address">
+                @if (isFieldInvalid('email')) {
+                  <div class="invalid-feedback">
+                    {{ getFieldError('email') }}
+                  </div>
+                }
+              </div>
+
+              <!-- WhatsApp Field -->
+              <div class="mb-3">
+                <label for="whatsApp" class="form-label">
+                  WhatsApp
+                </label>
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="fab fa-whatsapp text-success"></i>
+                  </span>
+                  <input
+                    type="text"
+                    id="whatsApp"
+                    class="form-control"
+                    formControlName="whatsApp"
+                    [class.is-invalid]="isFieldInvalid('whatsApp')"
+                    placeholder="+1234567890">
+                </div>
+                @if (isFieldInvalid('whatsApp')) {
+                  <div class="invalid-feedback">
+                    {{ getFieldError('whatsApp') }}
+                  </div>
+                }
+              </div>
+
+              <!-- LinkedIn Field -->
+              <div class="mb-3">
+                <label for="linkedIn" class="form-label">
+                  LinkedIn Profile
+                </label>
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="fab fa-linkedin text-primary"></i>
+                  </span>
+                  <input
+                    type="url"
+                    id="linkedIn"
+                    class="form-control"
+                    formControlName="linkedIn"
+                    [class.is-invalid]="isFieldInvalid('linkedIn')"
+                    placeholder="https://linkedin.com/in/username">
+                </div>
+                @if (isFieldInvalid('linkedIn')) {
+                  <div class="invalid-feedback">
+                    {{ getFieldError('linkedIn') }}
+                  </div>
+                }
+              </div>
+
+              <!-- GitHub Field -->
+              <div class="mb-3">
+                <label for="gitHub" class="form-label">
+                  GitHub Profile
+                </label>
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <input
+                    type="url"
+                    id="gitHub"
+                    class="form-control"
+                    formControlName="gitHub"
+                    [class.is-invalid]="isFieldInvalid('gitHub')"
+                    placeholder="https://github.com/username">
+                </div>
+                @if (isFieldInvalid('gitHub')) {
+                  <div class="invalid-feedback">
+                    {{ getFieldError('gitHub') }}
+                  </div>
+                }
+              </div>
+
+              <!-- Form Actions -->
+              <div class="d-flex justify-content-between">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  (click)="cancel()">
+                  <i class="fas fa-times me-2"></i>
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  [disabled]="loading()">
+                  @if (loading()) {
+                    <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                  }
+                  @if (isEditMode()) {
+                    <i class="fas fa-save me-2"></i>
+                    Update Participant
+                  } @else {
+                    <i class="fas fa-plus me-2"></i>
+                    Add Participant
+                  }
+                </button>
+              </div>
+            </form>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
