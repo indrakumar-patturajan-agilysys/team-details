@@ -1,0 +1,133 @@
+<div [class]="chatContainerClasses()">
+  <!-- Chatbot Toggle Button -->
+  <button 
+    class="chatbot-toggle"
+    (click)="toggleChatbot()"
+    title="Angular Chatbot"
+    type="button">
+    <i class="fab fa-angular"></i>
+  </button>
+
+  <!-- Chatbot Panel -->
+  <div class="chatbot-panel">
+    <!-- Header -->
+    <div class="chatbot-header">
+      <div class="header-content">
+        <div class="avatar-container">
+          <img 
+            [src]="angularLogoUrl" 
+            alt="Angular Chatbot"
+            class="chatbot-avatar">
+          <div 
+            class="status-indicator"
+            [class.online]="isOnline()"
+            [class.processing]="isProcessing()"
+            [title]="isProcessing() ? 'Processing...' : (isOnline() ? 'Online' : 'Offline')">
+          </div>
+        </div>
+        <div class="chatbot-info">
+          <h4 class="chatbot-name">Angular Chatbot</h4>
+          <p class="chatbot-status">
+            {{ isProcessing() ? 'Processing...' : (isOnline() ? 'Online' : 'Offline') }}
+          </p>
+        </div>
+      </div>
+      <div class="header-actions">
+        @if (messages().length > 0) {
+          <button 
+            class="btn-icon clear-chat-btn"
+            (click)="clearChat()"
+            title="Clear Chat History"
+            type="button">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        }
+        <button 
+          class="btn-icon theme-toggle"
+          (click)="toggleTheme()"
+          [title]="isDarkMode() ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+          type="button"
+          title="Toggle Theme">
+          <i [class]="isDarkMode() ? 'fas fa-sun' : 'fas fa-moon'"></i>
+        </button>
+        <button 
+          class="btn-icon close-btn"
+          (click)="closeChatbot()"
+          title="Close Chatbot"
+          type="button">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Chat History -->
+    <div class="chat-history">
+      @if (messages().length === 0) {
+        <div class="welcome-message">
+          <img [src]="angularLogoUrl" alt="Angular" class="welcome-logo">
+          <h5>Welcome to Angular Chatbot!</h5>
+          <p>Ask me anything about Angular, and I'll be happy to help.</p>
+        </div>
+      }
+      
+      @for (message of messages(); track message.id) {
+        <div class="message" [class.user-message]="message.isUser" [class.bot-message]="!message.isUser">
+          @if (!message.isUser) {
+            <img [src]="angularLogoUrl" alt="Angular Chatbot" class="message-avatar">
+          }
+          <div class="message-content">
+            <div class="message-text">{{ message.text }}</div>
+            <div class="message-time">
+              {{ message.timestamp | date:'HH:mm' }}
+            </div>
+          </div>
+          @if (message.isUser) {
+            <div class="user-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+          }
+        </div>
+      }
+      
+      @if (isProcessing()) {
+        <div class="message bot-message processing">
+          <img [src]="angularLogoUrl" alt="Angular Chatbot" class="message-avatar">
+          <div class="message-content">
+            <div class="typing-indicator">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Chat Input -->
+    <div class="chat-input">
+      <div class="input-container">
+        <textarea
+          [(ngModel)]="currentMessage"
+          (keypress)="onKeyPress($event)"
+          placeholder="Type your message here..."
+          class="message-input"
+          rows="1"
+          [disabled]="isProcessing() || !isOnline()"></textarea>
+        <button 
+          class="send-button"
+          (click)="sendMessage()"
+          [disabled]="!currentMessage().trim() || isProcessing() || !isOnline()"
+          title="Send Message"
+          type="button">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+      @if (!isOnline()) {
+        <div class="offline-notice">
+          <i class="fas fa-exclamation-triangle"></i>
+          Chatbot is currently offline
+        </div>
+      }
+    </div>
+  </div>
+</div>
